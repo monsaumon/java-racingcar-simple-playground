@@ -25,25 +25,25 @@ public class CarTest {
         assertThat(actual).isEqualTo(expected);
     }
 
-    @DisplayName("move의 입력이 int 배열이라면 각 원소마다 4 이상이면 움직인 후 총 이동거리를 반환한다.")
+    @DisplayName("move의 입력이 int 배열이라면 각 원소마다 4 이상이면 움직인 후 이동 여부 배열을 반환한다.")
     @ParameterizedTest
-    @MethodSource("intArrayAndDistance")
-    public void testMoveArray(final int[] numbers, final int expected) {
+    @MethodSource("testMoveArraySource")
+    public void testMoveArray(final int[] numbers, final int[] expected) {
         // given
         Car car = new Car("asdf");
 
         // when
-        final int actual = car.move(numbers);
+        final int[] actual = car.move(numbers);
 
         // then
         assertThat(actual).isEqualTo(expected);
     }
 
-    private static Stream<Arguments> intArrayAndDistance() {
+    private static Stream<Arguments> testMoveArraySource() {
         return Stream.of(
-                Arguments.arguments(new int[]{0, 3, 4, 9}, 2),
-                Arguments.arguments(new int[]{4, 4, 4, 4}, 4),
-                Arguments.arguments(new int[]{3, 3, 3, 3}, 0)
+                Arguments.arguments(new int[]{0, 3, 4, 9}, new int[]{0, 0, 1, 1}),
+                Arguments.arguments(new int[]{4, 4, 4, 4}, new int[]{1, 1, 1, 1}),
+                Arguments.arguments(new int[]{3, 3, 3, 3}, new int[]{0, 0, 0, 0})
         );
     }
 

@@ -1,3 +1,6 @@
+import java.util.ArrayList;
+import java.util.List;
+
 public record Car(String name) {
     private String checkName(final String name) throws IllegalArgumentException {
         if (name == null || name.isBlank()) {
@@ -17,11 +20,11 @@ public record Car(String name) {
         return n >= 4;
     }
 
-    public int move(final int[] numbers) {
-        int movedDistance = 0;
+    public int[] move(final int[] numbers) {
+        final List<Integer> movedDistance = new ArrayList<>();
         for (int number : numbers) {
-            movedDistance += Boolean.compare(number >= 4, false);
+            movedDistance.add(Boolean.compare(number >= 4, false));
         }
-        return movedDistance;
+        return movedDistance.stream().mapToInt(i -> i).toArray();
     }
 }
