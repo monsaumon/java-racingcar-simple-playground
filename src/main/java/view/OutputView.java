@@ -1,24 +1,10 @@
+package view;
+
+import domain.WrongArrayLengthException;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Scanner;
 
-public class IO {
-    private final Scanner scanner;
-
-    public IO() {
-        this.scanner = new Scanner(System.in);
-    }
-
-    public String[] getCarNames() {
-        System.out.println("경주할 자동차 이름을 입력하세요(이름은 쉼표(,)를 기준으로 구분).");
-        return scanner.nextLine().split(",");
-    }
-
-    public int getMoveCount() {
-        System.out.println("시도할 횟수는 몇회인가요?");
-        return scanner.nextInt();
-    }
-
+public class OutputView {
     private void printOneMove(final int[] movedDistance, final String[] names) {
         if (names.length != movedDistance.length) {
             throw new WrongArrayLengthException();

@@ -1,10 +1,14 @@
+import domain.Race;
+import domain.RandomGenerator;
 import java.util.List;
+import view.InputView;
+import view.OutputView;
 
 public class Application {
     public static void main(String[] args) {
-        IO io = new IO();
-        final String[] carNames = io.getCarNames();
-        final int moveCount = io.getMoveCount();
+        final InputView inputView = new InputView();
+        final String[] carNames = inputView.getCarNames();
+        final int moveCount = inputView.getMoveCount();
 
         Race race = new Race(carNames);
         RandomGenerator generator = new RandomGenerator();
@@ -12,6 +16,7 @@ public class Application {
                 generator.generateRandom2DArray(carNames.length, moveCount));
         final List<String> winners = race.getWinners(moveHistory);
 
-        io.printRaceResult(moveHistory, carNames, winners);
+        final OutputView outputView = new OutputView();
+        outputView.printRaceResult(moveHistory, carNames, winners);
     }
 }
