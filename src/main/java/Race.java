@@ -41,8 +41,8 @@ public class Race {
         }
     }
 
-    private int[] getMovedDistances(final int numberOfMove, final int[][] numbers) {
-        checkSizeOf2DArray(numbers, cars.size(), numberOfMove);
+    private int[] getMovedDistances(final int moveCount, final int[][] numbers) {
+        checkSizeOf2DArray(numbers, cars.size(), moveCount);
         final int[] movedDistances = new int[cars.size()];
         for (int i = 0; i < cars.size(); i++) {
             movedDistances[i] = cars.get(i).move(numbers[i]);
@@ -59,8 +59,16 @@ public class Race {
         return winners;
     }
 
-    public List<String> race(final int numberOfMove, final int[][] numbers) {
-        final int[] movedDistances = getMovedDistances(numberOfMove, numbers);
+    public List<String> race(final int moveCount, final int[][] numbers) {
+        final int[] movedDistances = getMovedDistances(moveCount, numbers);
         return getWinners(movedDistances);
+    }
+
+    public String[] getCarNames() {
+        final List<String> carNames = new ArrayList<>();
+        for (Car car : cars) {
+            carNames.add(car.name());
+        }
+        return carNames.toArray(String[]::new);
     }
 }
