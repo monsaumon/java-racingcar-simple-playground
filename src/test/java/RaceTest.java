@@ -14,13 +14,13 @@ public class RaceTest {
     @DisplayName("이동 횟수와 2차원 숫자 배열을 받아 이동한 뒤 우승 자동차를 출력한다.")
     @ParameterizedTest
     @MethodSource("testRaceSource")
-    public void testRace(final String[] names, final int numberOfMove, final int[][] numbers,
+    public void testRace(final String[] names, final int moveCount, final int[][] numbers,
                          final List<String> expected) {
         // given
-        Race race = new Race(names);
+        final Race race = new Race(names);
 
         // when
-        List<String> actual = race.race(numberOfMove, numbers);
+        final List<String> actual = race.race(moveCount, numbers);
 
         // then
         assertThat(actual).isEqualTo(expected);
@@ -47,7 +47,7 @@ public class RaceTest {
     @Test
     public void testRaceThrowsWrongArrayLengthException() {
         // given
-        Race race = new Race("aa", "bb", "cc");
+        final Race race = new Race("aa", "bb", "cc");
 
         // when & then
         assertAll(
@@ -57,6 +57,27 @@ public class RaceTest {
                         WrongArrayLengthException.class),
                 () -> assertThatThrownBy(() -> race.race(3, new int[][]{{2, 2}, {3, 3}, {4, 4}})).isInstanceOf(
                         WrongArrayLengthException.class)
+        );
+    }
+
+    @DisplayName("getCarNames는 Car들의 이름을 반환한다.")
+    @ParameterizedTest
+    @MethodSource("testGetCarNamesSource")
+    public void testGetCarNames(final String[] expected) {
+        // given
+        final Race race = new Race(expected);
+
+        // when
+        final String[] actual = race.getCarNames();
+
+        // then
+        assertThat(actual).isEqualTo(expected);
+    }
+
+    private static Stream<Arguments> testGetCarNamesSource() {
+        return Stream.of(
+                Arguments.arguments((Object) new String[]{"aaaa", "bbb", "cc"}),
+                Arguments.arguments((Object) new String[]{"asdf", "qwefe", "fds", "as"})
         );
     }
 }
