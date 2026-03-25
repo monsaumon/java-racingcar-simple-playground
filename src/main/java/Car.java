@@ -1,5 +1,5 @@
 public record Car(String name) {
-    private String checkName(String name) throws IllegalArgumentException {
+    private String checkName(final String name) throws IllegalArgumentException {
         if (name == null || name.isBlank()) {
             throw new IllegalArgumentException("이름이 비어있을 수 없습니다.");
         }
@@ -9,11 +9,11 @@ public record Car(String name) {
         return name;
     }
 
-    public Car(String name) {
+    public Car(final String name) {
         this.name = checkName(name);
     }
 
-    public boolean move(int n) {
+    public boolean move(final int n) {
         return n >= 4;
     }
 }
