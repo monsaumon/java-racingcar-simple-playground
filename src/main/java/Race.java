@@ -41,27 +41,26 @@ public class Race {
         }
     }
 
-    private int[] getMovedDistances(final int moveCount, final int[][] numbers) {
+    public int[][] getMoveHistory(final int moveCount, final int[][] numbers) {
         checkSizeOf2DArray(numbers, cars.size(), moveCount);
-        final int[] movedDistances = new int[cars.size()];
+        final int[][] moveHistory = new int[cars.size()][moveCount];
         for (int i = 0; i < cars.size(); i++) {
-            movedDistances[i] = cars.get(i).move(numbers[i]);
+            moveHistory[i] = cars.get(i).move(numbers[i]);
         }
-        return movedDistances;
+        return moveHistory;
     }
 
-    private List<String> getWinners(final int[] movedDistances) {
+    public List<String> getWinners(final int[][] moveHistory) {
         final List<String> winners = new ArrayList<>();
-        final int maxDistance = Arrays.stream(movedDistances).max().orElseThrow(NoSuchElementException::new);
-        for (int i = 0; i < movedDistances.length; i++) {
-            conditionalAdd(winners, movedDistances[i] == maxDistance, cars.get(i).name());
+        final int[] movedDistance = new int[moveHistory.length];
+        for (int i = 0; i < moveHistory.length; i++) {
+            movedDistance[i] = Arrays.stream(moveHistory[i]).sum();
+        }
+        final int maxDistance = Arrays.stream(movedDistance).max().orElseThrow(NoSuchElementException::new);
+        for (int i = 0; i < moveHistory.length; i++) {
+            conditionalAdd(winners, movedDistance[i] == maxDistance, cars.get(i).name());
         }
         return winners;
-    }
-
-    public List<String> race(final int moveCount, final int[][] numbers) {
-        final int[] movedDistances = getMovedDistances(moveCount, numbers);
-        return getWinners(movedDistances);
     }
 
     public String[] getCarNames() {

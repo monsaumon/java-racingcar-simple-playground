@@ -11,28 +11,30 @@ import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
 public class RaceTest {
-    @DisplayName("이동 횟수와 2차원 숫자 배열을 받아 이동한 뒤 우승 자동차를 출력한다.")
+    @DisplayName("이동 횟수와 2차원 숫자 배열을 받아 이동 내역을 반환한다.")
     @ParameterizedTest
-    @MethodSource("testRaceSource")
-    public void testRace(final String[] names, final int moveCount, final int[][] numbers,
-                         final List<String> expected) {
+    @MethodSource("testGetMoveHistorySource")
+    public void testGetMoveHistory(final String[] names, final int moveCount, final int[][] numbers,
+                                   final int[][] expected) {
         // given
         final Race race = new Race(names);
 
         // when
-        final List<String> actual = race.race(moveCount, numbers);
+        final int[][] actual = race.getMoveHistory(moveCount, numbers);
 
         // then
         assertThat(actual).isEqualTo(expected);
     }
 
-    private static Stream<Arguments> testRaceSource() {
+    private static Stream<Arguments> testGetMoveHistorySource() {
         return Stream.of(
                 Arguments.arguments(new String[]{"aa", "bb", "cc"}, 4,
-                        new int[][]{{4, 4, 4, 4}, {3, 3, 3, 3}, {3, 3, 4, 4}}, List.of("aa")),
+                        new int[][]{{4, 4, 4, 4}, {3, 3, 3, 3}, {3, 3, 4, 4}},
+                        new int[][]{{1, 1, 1, 1}, {0, 0, 0, 0}, {0, 0, 1, 1}}),
                 Arguments.arguments(new String[]{"aa", "bb", "cc"}, 2, new int[][]{{5, 4}, {8, 9}, {2, 6}},
-                        List.of("aa", "bb")),
-                Arguments.arguments(new String[]{"aa", "bb"}, 3, new int[][]{{3, 3, 3}, {6, 2, 6}}, List.of("bb"))
+                        new int[][]{{1, 1}, {1, 1}, {0, 1}}),
+                Arguments.arguments(new String[]{"aa", "bb"}, 3, new int[][]{{3, 3, 3}, {6, 2, 6}},
+                        new int[][]{{0, 0, 0}, {1, 0, 1}})
         );
     }
 
@@ -51,12 +53,37 @@ public class RaceTest {
 
         // when & then
         assertAll(
-                () -> assertThatThrownBy(() -> race.race(3, new int[][]{{3, 3, 3}, {4, 4, 4}})).isInstanceOf(
+                () -> assertThatThrownBy(() -> race.getMoveHistory(3, new int[][]{{3, 3, 3}, {4, 4, 4}})).isInstanceOf(
                         WrongArrayLengthException.class),
-                () -> assertThatThrownBy(() -> race.race(3, new int[][]{{3, 3, 3}, {4, 4, 4}, {2, 2}})).isInstanceOf(
+                () -> assertThatThrownBy(
+                        () -> race.getMoveHistory(3, new int[][]{{3, 3, 3}, {4, 4, 4}, {2, 2}})).isInstanceOf(
                         WrongArrayLengthException.class),
-                () -> assertThatThrownBy(() -> race.race(3, new int[][]{{2, 2}, {3, 3}, {4, 4}})).isInstanceOf(
+                () -> assertThatThrownBy(
+                        () -> race.getMoveHistory(3, new int[][]{{2, 2}, {3, 3}, {4, 4}})).isInstanceOf(
                         WrongArrayLengthException.class)
+        );
+    }
+
+    @DisplayName("이동 내역을 받으면 우승자를 반환한다.")
+    @ParameterizedTest
+    @MethodSource("testGetWinnersSource")
+    public void testGetWinners(final int[][] moveHistory, final List<String> expected) {
+        // given
+        final Race race = new Race("asdf", "sdfg", "dfgh");
+
+        // when
+        final List<String> actual = race.getWinners(moveHistory);
+
+        // then
+        assertThat(actual).isEqualTo(expected);
+    }
+
+    private static Stream<Arguments> testGetWinnersSource() {
+        return Stream.of(
+                Arguments.arguments(new int[][]{{1, 1, 1, 1}, {0, 0, 0, 0}, {0, 0, 1, 1}}, List.of("asdf")),
+                Arguments.arguments(new int[][]{{1, 1}, {1, 1}, {0, 1}}, List.of("asdf", "sdfg")),
+                Arguments.arguments(new int[][]{{0, 0, 0}, {1, 0, 1}, {1, 0, 0}}, List.of("sdfg"))
+
         );
     }
 
