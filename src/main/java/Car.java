@@ -16,4 +16,12 @@ public record Car(String name) {
     public boolean move(final int n) {
         return n >= 4;
     }
+
+    public int move(final int[] numbers) {
+        int movedDistance = 0;
+        for (int number : numbers) {
+            movedDistance += Boolean.compare(number >= 4, false);
+        }
+        return movedDistance;
+    }
 }
