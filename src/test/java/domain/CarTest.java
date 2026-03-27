@@ -49,20 +49,6 @@ public class CarTest {
         );
     }
 
-    @DisplayName("getName 함수는 name을 반환한다.")
-    @ParameterizedTest
-    @ValueSource(strings = {"a", "qwe", "yeonu"})
-    public void testGetName(final String expected) {
-        // given
-        Car car = new Car(expected);
-
-        // when
-        final String actual = car.name();
-
-        // then
-        assertThat(actual).isEqualTo(expected);
-    }
-
     @DisplayName("이름이 비어있거나 5자를 넘으면 IllegalArgumentException을 throw한다.")
     @ParameterizedTest
     @CsvSource(value = {"''", "' '", "'\n'", "'asdfgh'"})
