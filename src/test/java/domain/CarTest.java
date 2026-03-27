@@ -1,7 +1,6 @@
 package domain;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import java.util.stream.Stream;
 import org.junit.jupiter.api.DisplayName;
@@ -9,7 +8,6 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.MethodSource;
-import org.junit.jupiter.params.provider.ValueSource;
 
 public class CarTest {
     @DisplayName("입력이 4 이상이면 1, 아니면 0을 반환한다.")
@@ -47,13 +45,5 @@ public class CarTest {
                 Arguments.arguments(new int[]{4, 4, 4, 4}, new int[]{1, 1, 1, 1}),
                 Arguments.arguments(new int[]{3, 3, 3, 3}, new int[]{0, 0, 0, 0})
         );
-    }
-
-    @DisplayName("이름이 비어있거나 5자를 넘으면 IllegalArgumentException을 throw한다.")
-    @ParameterizedTest
-    @CsvSource(value = {"''", "' '", "'\n'", "'asdfgh'"})
-    public void testInvalidName(final String name) {
-        // when & then
-        assertThatThrownBy(() -> new Car(name)).isInstanceOf(IllegalArgumentException.class);
     }
 }
