@@ -14,12 +14,12 @@ public class CarTest {
     @ParameterizedTest
     @CsvSource(value = {"0,0", "1,0", "2,0", "3,0",
             "4,1", "5,1", "6,1", "7,1", "8,1", "9,1"})
-    public void testMoveIfGreaterThanFour(final int n, final int expected) {
+    public void testMoveIfGreaterThanThree(final int n, final int expected) {
         // given
         Car car = new Car("asdf");
 
         // when
-        final int actual = car.moveIfGreaterThanFour(n);
+        final int actual = car.moveIfGreaterThanThree(n);
 
         // then
         assertThat(actual).isEqualTo(expected);
