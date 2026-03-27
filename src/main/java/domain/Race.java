@@ -5,6 +5,8 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.NoSuchElementException;
 
+import static domain.Utils.*;
+
 public class Race {
     private final List<Car> cars;
 
@@ -15,31 +17,6 @@ public class Race {
         cars = new ArrayList<>();
         for (final String name : names) {
             cars.add(new Car(name));
-        }
-    }
-
-    private static <T> boolean hasRedundancy(final T[] array) {
-        return Arrays.stream(array).distinct().count() != array.length;
-    }
-
-    private static <T> void conditionalAdd(final List<T> list, final boolean condition, final T value) {
-        if (condition) {
-            list.add(value);
-        }
-    }
-
-    private static void checkSizeOfArray(final int[] array, final int length) {
-        if (array.length != length) {
-            throw new WrongArrayLengthException();
-        }
-    }
-
-    private static void checkSizeOf2DArray(final int[][] array, final int firstLength, final int secondLength) {
-        if (array.length != firstLength) {
-            throw new WrongArrayLengthException();
-        }
-        for (int[] subArray : array) {
-            checkSizeOfArray(subArray, secondLength);
         }
     }
 
