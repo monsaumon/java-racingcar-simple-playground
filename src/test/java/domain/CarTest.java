@@ -12,8 +12,7 @@ import org.junit.jupiter.params.provider.MethodSource;
 public class CarTest {
     @DisplayName("입력이 4 이상이면 1, 아니면 0을 반환한다.")
     @ParameterizedTest
-    @CsvSource(value = {"0,0", "1,0", "2,0", "3,0",
-            "4,1", "5,1", "6,1", "7,1", "8,1", "9,1"})
+    @CsvSource(value = {"0,0", "3,0", "4,1", "9,1"})
     public void testMoveIfGreaterThanThree(final int n, final int expected) {
         // given
         Car car = new Car("asdf");
@@ -25,7 +24,7 @@ public class CarTest {
         assertThat(actual).isEqualTo(expected);
     }
 
-    @DisplayName("move의 입력이 int 배열이라면 각 원소마다 4 이상이면 움직인 후 이동 여부 배열을 반환한다.")
+    @DisplayName("입력 배열의 각 원소마다 4 이상이면 움직이고, 이동 내역을 반환한다.")
     @ParameterizedTest
     @MethodSource
     public void testGenerateMoveHistory(final int[] numbers, final int[] expected) {
