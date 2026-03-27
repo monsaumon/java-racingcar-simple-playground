@@ -42,7 +42,7 @@ public class RaceTest {
 
     @DisplayName("numbers 배열 크기가 맞지 않으면 WrongArrayLengthException을 throw한다.")
     @Test
-    public void testRaceThrowsWrongArrayLengthException() {
+    public void testGetMoveHistoryFromEachCar_WrongArrayLength() {
         // given
         final Race race = new Race("aa", "bb", "cc");
 
