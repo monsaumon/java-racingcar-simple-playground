@@ -17,10 +17,10 @@ public class RandomGenerator {
         return array;
     }
 
-    public int[][] generateRandom2DArray(final int firstLength, final int secondLength) {
-        final int[][] array = new int[firstLength][secondLength];
-        for (int i = 0; i < firstLength; i++) {
-            array[i] = generateRandomArray(secondLength);
+    public int[][] generateRandom2DArray(final int length1, final int length2) {
+        final int[][] array = new int[length1][length2];
+        for (int i = 0; i < length1; i++) {
+            array[i] = generateRandomArray(length2);
         }
         return array;
     }
