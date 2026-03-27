@@ -17,11 +17,11 @@ public class Race {
         }
     }
 
-    public int[][] getMoveHistory(final int moveCount, final int[][] numbers) {
+    public int[][] getMoveHistoryEach(final int moveCount, final int[][] numbers) {
         checkSizeOf2DArray(numbers, cars.size(), moveCount);
         final int[][] moveHistory = new int[cars.size()][moveCount];
         for (int i = 0; i < cars.size(); i++) {
-            moveHistory[i] = cars.get(i).move(numbers[i]);
+            moveHistory[i] = cars.get(i).generateMoveHistory(numbers[i]);
         }
         return moveHistory;
     }

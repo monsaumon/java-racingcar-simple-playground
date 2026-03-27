@@ -15,20 +15,20 @@ import org.junit.jupiter.params.provider.MethodSource;
 public class RaceTest {
     @DisplayName("이동 횟수와 2차원 숫자 배열을 받아 이동 내역을 반환한다.")
     @ParameterizedTest
-    @MethodSource("testGetMoveHistorySource")
-    public void testGetMoveHistory(final String[] names, final int moveCount, final int[][] numbers,
-                                   final int[][] expected) {
+    @MethodSource("testGetMoveHistoryEachSource")
+    public void testGetMoveHistoryEach(final String[] names, final int moveCount, final int[][] numbers,
+                                       final int[][] expected) {
         // given
         final Race race = new Race(names);
 
         // when
-        final int[][] actual = race.getMoveHistory(moveCount, numbers);
+        final int[][] actual = race.getMoveHistoryEach(moveCount, numbers);
 
         // then
         assertThat(actual).isEqualTo(expected);
     }
 
-    private static Stream<Arguments> testGetMoveHistorySource() {
+    private static Stream<Arguments> testGetMoveHistoryEachSource() {
         return Stream.of(
                 Arguments.arguments(new String[]{"aa", "bb", "cc"}, 4,
                         new int[][]{{4, 4, 4, 4}, {3, 3, 3, 3}, {3, 3, 4, 4}},
@@ -55,13 +55,13 @@ public class RaceTest {
 
         // when & then
         assertAll(
-                () -> assertThatThrownBy(() -> race.getMoveHistory(3, new int[][]{{3, 3, 3}, {4, 4, 4}})).isInstanceOf(
+                () -> assertThatThrownBy(() -> race.getMoveHistoryEach(3, new int[][]{{3, 3, 3}, {4, 4, 4}})).isInstanceOf(
                         WrongArrayLengthException.class),
                 () -> assertThatThrownBy(
-                        () -> race.getMoveHistory(3, new int[][]{{3, 3, 3}, {4, 4, 4}, {2, 2}})).isInstanceOf(
+                        () -> race.getMoveHistoryEach(3, new int[][]{{3, 3, 3}, {4, 4, 4}, {2, 2}})).isInstanceOf(
                         WrongArrayLengthException.class),
                 () -> assertThatThrownBy(
-                        () -> race.getMoveHistory(3, new int[][]{{2, 2}, {3, 3}, {4, 4}})).isInstanceOf(
+                        () -> race.getMoveHistoryEach(3, new int[][]{{2, 2}, {3, 3}, {4, 4}})).isInstanceOf(
                         WrongArrayLengthException.class)
         );
     }
