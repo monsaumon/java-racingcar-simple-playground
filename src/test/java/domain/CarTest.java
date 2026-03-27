@@ -12,16 +12,16 @@ import org.junit.jupiter.params.provider.MethodSource;
 import org.junit.jupiter.params.provider.ValueSource;
 
 public class CarTest {
-    @DisplayName("move의 입력이 4 이상이면 true, 아니면 false를 반환한다.")
+    @DisplayName("입력이 4 이상이면 1, 아니면 0을 반환한다.")
     @ParameterizedTest
-    @CsvSource(value = {"0,false", "1,false", "2,false", "3,false",
-            "4,true", "5,true", "6,true", "7,true", "8,true", "9,true"})
-    public void testMove(final int n, final boolean expected) {
+    @CsvSource(value = {"0,0", "1,0", "2,0", "3,0",
+            "4,1", "5,1", "6,1", "7,1", "8,1", "9,1"})
+    public void testMoveIfGreaterThanFour(final int n, final int expected) {
         // given
         Car car = new Car("asdf");
 
         // when
-        final boolean actual = car.move(n);
+        final int actual = car.moveIfGreaterThanFour(n);
 
         // then
         assertThat(actual).isEqualTo(expected);
@@ -29,19 +29,19 @@ public class CarTest {
 
     @DisplayName("move의 입력이 int 배열이라면 각 원소마다 4 이상이면 움직인 후 이동 여부 배열을 반환한다.")
     @ParameterizedTest
-    @MethodSource("testMoveArraySource")
-    public void testMoveArray(final int[] numbers, final int[] expected) {
+    @MethodSource("testGenerateMoveHistorySource")
+    public void testGenerateMoveHistory(final int[] numbers, final int[] expected) {
         // given
         Car car = new Car("asdf");
 
         // when
-        final int[] actual = car.move(numbers);
+        final int[] actual = car.generateMoveHistory(numbers);
 
         // then
         assertThat(actual).isEqualTo(expected);
     }
 
-    private static Stream<Arguments> testMoveArraySource() {
+    private static Stream<Arguments> testGenerateMoveHistorySource() {
         return Stream.of(
                 Arguments.arguments(new int[]{0, 3, 4, 9}, new int[]{0, 0, 1, 1}),
                 Arguments.arguments(new int[]{4, 4, 4, 4}, new int[]{1, 1, 1, 1}),

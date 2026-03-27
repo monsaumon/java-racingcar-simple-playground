@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public record Car(String name) {
-    private String checkName(final String name) throws IllegalArgumentException {
+    private String checkName(final String name) {
         if (name == null || name.isBlank()) {
             throw new IllegalArgumentException("이름이 비어있을 수 없습니다.");
         }
@@ -18,15 +18,15 @@ public record Car(String name) {
         this.name = checkName(name);
     }
 
-    public boolean move(final int n) {
-        return n >= 4;
+    public int moveIfGreaterThanFour(final int number) {
+        return Boolean.compare(number >= 4, false);
     }
 
-    public int[] move(final int[] numbers) {
-        final List<Integer> movedDistance = new ArrayList<>();
+    public int[] generateMoveHistory(final int[] numbers) {
+        final List<Integer> moveHistory = new ArrayList<>();
         for (int number : numbers) {
-            movedDistance.add(Boolean.compare(number >= 4, false));
+            moveHistory.add(moveIfGreaterThanFour(number));
         }
-        return movedDistance.stream().mapToInt(i -> i).toArray();
+        return moveHistory.stream().mapToInt(i -> i).toArray();
     }
 }
