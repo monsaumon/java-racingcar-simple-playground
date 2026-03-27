@@ -36,6 +36,9 @@ public class Utils {
         if (array.length != length1) {
             throw new WrongArrayLengthException();
         }
+        if (length1 == 0 && length2 != 0) {
+            throw new WrongArrayLengthException();
+        }
         for (int[] subArray : array) {
             checkSizeOfArray(subArray, length2);
         }
