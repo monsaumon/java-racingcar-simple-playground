@@ -17,7 +17,7 @@ public class Race {
         }
     }
 
-    public int[][] getMoveHistoryEach(final int moveCount, final int[][] numbers) {
+    public int[][] getMoveHistoryFromEachCar(final int moveCount, final int[][] numbers) {
         checkSizeOf2DArray(numbers, cars.size(), moveCount);
         final int[][] moveHistory = new int[cars.size()][moveCount];
         for (int i = 0; i < cars.size(); i++) {

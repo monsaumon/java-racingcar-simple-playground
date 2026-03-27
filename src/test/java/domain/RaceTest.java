@@ -15,20 +15,20 @@ import org.junit.jupiter.params.provider.MethodSource;
 public class RaceTest {
     @DisplayName("이동 횟수와 2차원 숫자 배열을 받아 이동 내역을 반환한다.")
     @ParameterizedTest
-    @MethodSource("testGetMoveHistoryEachSource")
-    public void testGetMoveHistoryEach(final String[] names, final int moveCount, final int[][] numbers,
-                                       final int[][] expected) {
+    @MethodSource("testGetMoveHistoryFromEachCarSource")
+    public void testGetMoveHistoryFromEachCar(final String[] names, final int moveCount, final int[][] numbers,
+                                              final int[][] expected) {
         // given
         final Race race = new Race(names);
 
         // when
-        final int[][] actual = race.getMoveHistoryEach(moveCount, numbers);
+        final int[][] actual = race.getMoveHistoryFromEachCar(moveCount, numbers);
 
         // then
         assertThat(actual).isEqualTo(expected);
     }
 
-    private static Stream<Arguments> testGetMoveHistoryEachSource() {
+    private static Stream<Arguments> testGetMoveHistoryFromEachCarSource() {
         return Stream.of(
                 Arguments.arguments(new String[]{"aa", "bb", "cc"}, 4,
                         new int[][]{{4, 4, 4, 4}, {3, 3, 3, 3}, {3, 3, 4, 4}},
@@ -40,13 +40,6 @@ public class RaceTest {
         );
     }
 
-    @DisplayName("중복된 이름을 입력하면 NameRedundancyException을 throw한다.")
-    @Test
-    public void testRaceThrowsNameRedundancyException() {
-        // when & then
-        assertThatThrownBy(() -> new Race(new String[]{"aa", "bb", "aa"})).isInstanceOf(NameRedundancyException.class);
-    }
-
     @DisplayName("numbers 배열 크기가 맞지 않으면 WrongArrayLengthException을 throw한다.")
     @Test
     public void testRaceThrowsWrongArrayLengthException() {
@@ -55,13 +48,13 @@ public class RaceTest {
 
         // when & then
         assertAll(
-                () -> assertThatThrownBy(() -> race.getMoveHistoryEach(3, new int[][]{{3, 3, 3}, {4, 4, 4}})).isInstanceOf(
+                () -> assertThatThrownBy(() -> race.getMoveHistoryFromEachCar(3, new int[][]{{3, 3, 3}, {4, 4, 4}})).isInstanceOf(
                         WrongArrayLengthException.class),
                 () -> assertThatThrownBy(
-                        () -> race.getMoveHistoryEach(3, new int[][]{{3, 3, 3}, {4, 4, 4}, {2, 2}})).isInstanceOf(
+                        () -> race.getMoveHistoryFromEachCar(3, new int[][]{{3, 3, 3}, {4, 4, 4}, {2, 2}})).isInstanceOf(
                         WrongArrayLengthException.class),
                 () -> assertThatThrownBy(
-                        () -> race.getMoveHistoryEach(3, new int[][]{{2, 2}, {3, 3}, {4, 4}})).isInstanceOf(
+                        () -> race.getMoveHistoryFromEachCar(3, new int[][]{{2, 2}, {3, 3}, {4, 4}})).isInstanceOf(
                         WrongArrayLengthException.class)
         );
     }

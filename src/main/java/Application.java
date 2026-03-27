@@ -12,7 +12,7 @@ public class Application {
 
         Race race = new Race(carNames);
         RandomGenerator generator = new RandomGenerator();
-        final int[][] moveHistory = race.getMoveHistoryEach(moveCount,
+        final int[][] moveHistory = race.getMoveHistoryFromEachCar(moveCount,
                 generator.generateRandom2DArray(carNames.length, moveCount));
         final List<String> winners = race.getWinners(moveHistory);
 
