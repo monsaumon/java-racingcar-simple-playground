@@ -15,7 +15,7 @@ import org.junit.jupiter.params.provider.MethodSource;
 public class RaceTest {
     @DisplayName("이동 횟수와 2차원 숫자 배열을 받아 이동 내역을 반환한다.")
     @ParameterizedTest
-    @MethodSource("testGetMoveHistoryFromEachCarSource")
+    @MethodSource
     public void testGetMoveHistoryFromEachCar(final String[] names, final int moveCount, final int[][] numbers,
                                               final int[][] expected) {
         // given
@@ -28,7 +28,7 @@ public class RaceTest {
         assertThat(actual).isEqualTo(expected);
     }
 
-    private static Stream<Arguments> testGetMoveHistoryFromEachCarSource() {
+    private static Stream<Arguments> testGetMoveHistoryFromEachCar() {
         return Stream.of(
                 Arguments.arguments(new String[]{"aa", "bb", "cc"}, 4,
                         new int[][]{{4, 4, 4, 4}, {3, 3, 3, 3}, {3, 3, 4, 4}},
@@ -61,7 +61,7 @@ public class RaceTest {
 
     @DisplayName("이동 내역을 받으면 우승자를 반환한다.")
     @ParameterizedTest
-    @MethodSource("testGetWinnersSource")
+    @MethodSource
     public void testGetWinners(final int[][] moveHistory, final List<String> expected) {
         // given
         final Race race = new Race("asdf", "sdfg", "dfgh");
@@ -73,7 +73,7 @@ public class RaceTest {
         assertThat(actual).isEqualTo(expected);
     }
 
-    private static Stream<Arguments> testGetWinnersSource() {
+    private static Stream<Arguments> testGetWinners() {
         return Stream.of(
                 Arguments.arguments(new int[][]{{1, 1, 1, 1}, {0, 0, 0, 0}, {0, 0, 1, 1}}, List.of("asdf")),
                 Arguments.arguments(new int[][]{{1, 1}, {1, 1}, {0, 1}}, List.of("asdf", "sdfg")),
@@ -84,7 +84,7 @@ public class RaceTest {
 
     @DisplayName("getCarNames는 Car들의 이름을 반환한다.")
     @ParameterizedTest
-    @MethodSource("testGetCarNamesSource")
+    @MethodSource
     public void testGetCarNames(final String[] expected) {
         // given
         final Race race = new Race(expected);
@@ -96,7 +96,7 @@ public class RaceTest {
         assertThat(actual).isEqualTo(expected);
     }
 
-    private static Stream<Arguments> testGetCarNamesSource() {
+    private static Stream<Arguments> testGetCarNames() {
         return Stream.of(
                 Arguments.arguments((Object) new String[]{"aaaa", "bbb", "cc"}),
                 Arguments.arguments((Object) new String[]{"asdf", "qwefe", "fds", "as"})

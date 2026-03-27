@@ -45,13 +45,13 @@ public class UtilsTest {
 
     @DisplayName("중복된 값이 없으면 아무 작업도 하지 않는다.")
     @ParameterizedTest
-    @MethodSource("testCheckRedundancy_NoRedundantNameSource")
+    @MethodSource
     public <T> void testCheckRedundancy_NoRedundantName(final T[] array) {
         // when & then
         assertThatCode(() -> checkRedundancy(array)).doesNotThrowAnyException();
     }
 
-    private static Stream<Arguments> testCheckRedundancy_NoRedundantNameSource() {
+    private static Stream<Arguments> testCheckRedundancy_NoRedundantName() {
         return Stream.of(
                 Arguments.arguments((Object) new String[]{"asdf", "asdff", "asdfg", "fd", ""}),
                 Arguments.arguments((Object) new Integer[]{0, 123, -432, 1223}),
@@ -61,13 +61,13 @@ public class UtilsTest {
 
     @DisplayName("중복된 값이 존재하면 RedundantValueException을 throw한다.")
     @ParameterizedTest
-    @MethodSource("testCheckRedundancy_RedundantNameSource")
+    @MethodSource
     public <T> void testCheckRedundancy_RedundantName(final T[] array) {
         // when & then
         assertThatThrownBy(() -> checkRedundancy(array)).isInstanceOf(RedundantValueException.class);
     }
 
-    private static Stream<Arguments> testCheckRedundancy_RedundantNameSource() {
+    private static Stream<Arguments> testCheckRedundancy_RedundantName() {
         return Stream.of(
                 Arguments.arguments((Object) new String[]{"asdf", "asdff", "asdf", "fd", ""}),
                 Arguments.arguments((Object) new Integer[] {0, 123, -432, 123}),
@@ -77,7 +77,7 @@ public class UtilsTest {
 
     @DisplayName("condition이 true라면 list에 value를 추가한다.")
     @ParameterizedTest
-    @MethodSource("testConditionalAdd_TrueConditionSource")
+    @MethodSource
     public <T> void testConditionalAdd_TrueCondition(final List<T> actual, final T value, final List<T> expected) {
         // when
         conditionalAdd(actual, true, value);
@@ -86,7 +86,7 @@ public class UtilsTest {
         assertThat(actual).isEqualTo(expected);
     }
 
-    private static Stream<Arguments> testConditionalAdd_TrueConditionSource() {
+    private static Stream<Arguments> testConditionalAdd_TrueCondition() {
         return Stream.of(
                 Arguments.arguments(new ArrayList<>(List.of("aa", "bb", "cc")), "dd", List.of("aa", "bb", "cc", "dd")),
                 Arguments.arguments(new ArrayList<>(List.of('a', 'b', 'c')), '\n', List.of('a', 'b', 'c', '\n')),
@@ -96,7 +96,7 @@ public class UtilsTest {
 
     @DisplayName("condition이 false라면 list에 value를 추가하지 않는다.")
     @ParameterizedTest
-    @MethodSource("testConditionalAdd_FalseConditionSource")
+    @MethodSource
     public <T> void testConditionalAdd_FalseCondition(final List<T> actual, final T value, final List<T> expected) {
         // when
         conditionalAdd(actual, false, value);
@@ -105,7 +105,7 @@ public class UtilsTest {
         assertThat(actual).isEqualTo(expected);
     }
 
-    private static Stream<Arguments> testConditionalAdd_FalseConditionSource() {
+    private static Stream<Arguments> testConditionalAdd_FalseCondition() {
         return Stream.of(
                 Arguments.arguments(new ArrayList<>(List.of("aa", "bb", "cc")), "dd", List.of("aa", "bb", "cc")),
                 Arguments.arguments(new ArrayList<>(List.of('a', 'b', 'c')), '\n', List.of('a', 'b', 'c')),
@@ -115,13 +115,13 @@ public class UtilsTest {
 
     @DisplayName("size가 일치하면 아무 작업도 하지 않는다.")
     @ParameterizedTest
-    @MethodSource("testCheckSizeOfArray_CorrectSizeSource")
+    @MethodSource
     public void testCheckSizeOfArray_CorrectSize(final int[] array, final int length) {
         // when & then
         assertThatCode(() -> checkSizeOfArray(array, length)).doesNotThrowAnyException();
     }
 
-    private static Stream<Arguments> testCheckSizeOfArray_CorrectSizeSource() {
+    private static Stream<Arguments> testCheckSizeOfArray_CorrectSize() {
         return Stream.of(
                 Arguments.arguments(new int[]{}, 0),
                 Arguments.arguments(new int[]{1,2,3}, 3),
@@ -131,13 +131,13 @@ public class UtilsTest {
 
     @DisplayName("size가 일치하지 않으면 WrongArrayLengthException을 throw한다.")
     @ParameterizedTest
-    @MethodSource("testCheckSizeOfArray_WrongSizeSource")
+    @MethodSource
     public void testCheckSizeOfArray_WrongSize(final int[] array, final int length) {
         // when & then
         assertThatThrownBy(() -> checkSizeOfArray(array, length)).isInstanceOf(WrongArrayLengthException.class);
     }
 
-    private static Stream<Arguments> testCheckSizeOfArray_WrongSizeSource() {
+    private static Stream<Arguments> testCheckSizeOfArray_WrongSize() {
         return Stream.of(
                 Arguments.arguments(new int[]{}, 1),
                 Arguments.arguments(new int[]{1,2,3}, 0),
@@ -147,13 +147,13 @@ public class UtilsTest {
 
     @DisplayName("size가 일치하면 아무 작업도 하지 않는다.")
     @ParameterizedTest
-    @MethodSource("testCheckSizeOf2DArray_CorrectSizeSource")
+    @MethodSource
     public void testCheckSizeOf2DArray_CorrectSize(final int[][] array, final int length1, final int length2) {
         // when & then
         assertThatCode(() -> checkSizeOf2DArray(array, length1, length2)).doesNotThrowAnyException();
     }
 
-    private static Stream<Arguments> testCheckSizeOf2DArray_CorrectSizeSource() {
+    private static Stream<Arguments> testCheckSizeOf2DArray_CorrectSize() {
         return Stream.of(
                 Arguments.arguments(new int[][]{}, 0, 0),
                 Arguments.arguments(new int[][]{{},{},{}}, 3, 0),
@@ -163,13 +163,13 @@ public class UtilsTest {
 
     @DisplayName("size가 일치하지 않으면 WrongArrayLengthException을 throw한다.")
     @ParameterizedTest
-    @MethodSource("testCheckSizeOf2DArray_WrongSizeSource")
+    @MethodSource
     public void testCheckSizeOf2DArray_WrongSize(final int[][] array, final int length1, final int length2) {
         // when & then
         assertThatThrownBy(() -> checkSizeOf2DArray(array, length1, length2)).isInstanceOf(WrongArrayLengthException.class);
     }
 
-    private static Stream<Arguments> testCheckSizeOf2DArray_WrongSizeSource() {
+    private static Stream<Arguments> testCheckSizeOf2DArray_WrongSize() {
         return Stream.of(
                 Arguments.arguments(new int[][]{}, 1, 1),
                 Arguments.arguments(new int[][]{}, 0, 1),

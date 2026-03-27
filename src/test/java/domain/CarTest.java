@@ -27,7 +27,7 @@ public class CarTest {
 
     @DisplayName("move의 입력이 int 배열이라면 각 원소마다 4 이상이면 움직인 후 이동 여부 배열을 반환한다.")
     @ParameterizedTest
-    @MethodSource("testGenerateMoveHistorySource")
+    @MethodSource
     public void testGenerateMoveHistory(final int[] numbers, final int[] expected) {
         // given
         Car car = new Car("asdf");
@@ -39,7 +39,7 @@ public class CarTest {
         assertThat(actual).isEqualTo(expected);
     }
 
-    private static Stream<Arguments> testGenerateMoveHistorySource() {
+    private static Stream<Arguments> testGenerateMoveHistory() {
         return Stream.of(
                 Arguments.arguments(new int[]{0, 3, 4, 9}, new int[]{0, 0, 1, 1}),
                 Arguments.arguments(new int[]{4, 4, 4, 4}, new int[]{1, 1, 1, 1}),
