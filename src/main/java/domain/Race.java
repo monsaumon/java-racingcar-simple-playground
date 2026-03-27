@@ -11,9 +11,6 @@ public class Race {
     private final List<Car> cars;
 
     public Race(final String... names) {
-        if (hasRedundancy(names)) {
-            throw new NameRedundancyException();
-        }
         cars = new ArrayList<>();
         for (final String name : names) {
             cars.add(new Car(name));
