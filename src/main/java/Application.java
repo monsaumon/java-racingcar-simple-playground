@@ -7,8 +7,8 @@ import view.OutputView;
 public class Application {
     public static void main(String[] args) {
         final InputView inputView = new InputView();
-        final String[] carNames = inputView.getCarNames();
-        final int moveCount = inputView.getMoveCount();
+        final String[] carNames = inputView.inputCarNames();
+        final int moveCount = inputView.inputMoveCount();
 
         Race race = new Race(carNames);
         RandomGenerator generator = new RandomGenerator();
