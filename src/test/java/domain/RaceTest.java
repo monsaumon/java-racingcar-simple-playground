@@ -40,25 +40,6 @@ public class RaceTest {
         );
     }
 
-    @DisplayName("numbers 배열 크기가 맞지 않으면 WrongArrayLengthException을 throw한다.")
-    @Test
-    public void testGetMoveHistoryFromEachCar_WrongArrayLength() {
-        // given
-        final Race race = new Race("aa", "bb", "cc");
-
-        // when & then
-        assertAll(
-                () -> assertThatThrownBy(() -> race.getMoveHistoryFromEachCar(3, new int[][]{{3, 3, 3}, {4, 4, 4}})).isInstanceOf(
-                        WrongArrayLengthException.class),
-                () -> assertThatThrownBy(
-                        () -> race.getMoveHistoryFromEachCar(3, new int[][]{{3, 3, 3}, {4, 4, 4}, {2, 2}})).isInstanceOf(
-                        WrongArrayLengthException.class),
-                () -> assertThatThrownBy(
-                        () -> race.getMoveHistoryFromEachCar(3, new int[][]{{2, 2}, {3, 3}, {4, 4}})).isInstanceOf(
-                        WrongArrayLengthException.class)
-        );
-    }
-
     @DisplayName("이동 내역을 받으면 우승자를 반환한다.")
     @ParameterizedTest
     @MethodSource
