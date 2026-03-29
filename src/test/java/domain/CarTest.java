@@ -15,7 +15,7 @@ public class CarTest {
     @CsvSource(value = {"0,0", "3,0", "4,1", "9,1"})
     public void testMoveIfGreaterThan(final int n, final int expected) {
         // given
-        Car car = new Car("asdf");
+        final Car car = new Car("asdf");
 
         // when
         final int actual = car.moveIfGreaterThan(n);
@@ -29,7 +29,7 @@ public class CarTest {
     @MethodSource
     public void testGenerateMoveHistory(final int[] numbers, final int[] expected) {
         // given
-        Car car = new Car("asdf");
+        final Car car = new Car("asdf");
 
         // when
         final int[] actual = car.generateMoveHistory(numbers);
