@@ -8,9 +8,9 @@ public class Application {
     public static void main(String[] args) {
         final InputView inputView = new InputView();
         final String[] carNames = inputView.inputCarNames();
+        Race race = new Race(carNames);
         final int moveCount = inputView.inputMoveCount();
 
-        Race race = new Race(carNames);
         RandomGenerator generator = new RandomGenerator();
         final int[][] moveHistory = race.getMoveHistoryFromEachCar(moveCount,
                 generator.generateRandom2DArray(carNames.length, moveCount));

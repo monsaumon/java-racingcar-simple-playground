@@ -15,6 +15,7 @@ public class Race {
         for (final String name : names) {
             cars.add(new Car(name));
         }
+        checkRedundancy(cars.toArray());
     }
 
     public int[][] getMoveHistoryFromEachCar(final int moveCount, final int[][] arrayOfCarMoveNumbers) {
