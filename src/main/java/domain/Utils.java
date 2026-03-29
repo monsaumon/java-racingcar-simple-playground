@@ -4,11 +4,13 @@ import java.util.Arrays;
 import java.util.List;
 
 public class Utils {
+    private static final int NAME_MAX_LENGTH = 5;
+
     public static String validateName(final String name) {
         if (name == null || name.isBlank()) {
             throw new IllegalArgumentException("이름이 비어있을 수 없습니다.");
         }
-        if (name.length() > 5) {
+        if (name.length() > NAME_MAX_LENGTH) {
             throw new IllegalArgumentException("이름이 5자를 넘을 수 없습니다.");
         }
         return name;

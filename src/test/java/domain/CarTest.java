@@ -13,12 +13,12 @@ public class CarTest {
     @DisplayName("입력이 4 이상이면 1, 아니면 0을 반환한다.")
     @ParameterizedTest
     @CsvSource(value = {"0,0", "3,0", "4,1", "9,1"})
-    public void testMoveIfGreaterThanThree(final int n, final int expected) {
+    public void testMoveIfGreaterThan(final int n, final int expected) {
         // given
         Car car = new Car("asdf");
 
         // when
-        final int actual = car.moveIfGreaterThanThree(n);
+        final int actual = car.moveIfGreaterThan(n);
 
         // then
         assertThat(actual).isEqualTo(expected);

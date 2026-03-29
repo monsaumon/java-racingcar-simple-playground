@@ -3,6 +3,8 @@ package domain;
 import java.util.Random;
 
 public class RandomGenerator {
+    private static final int RANDOM_INT_BOUND = 10;
+
     private final Random random;
 
     public RandomGenerator() {
@@ -12,7 +14,7 @@ public class RandomGenerator {
     private int[] generateRandomArray(final int length) {
         final int[] array = new int[length];
         for (int i = 0; i < length; i++) {
-            array[i] = random.nextInt(10);
+            array[i] = random.nextInt(RANDOM_INT_BOUND);
         }
         return array;
     }
