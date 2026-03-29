@@ -12,11 +12,11 @@ public class Application {
         final int moveCount = inputView.inputMoveCount();
 
         RandomArrayGenerator generator = new RandomArrayGenerator();
-        final int[][] moveHistory = race.getMoveHistoryFromEachCar(moveCount,
-                generator.generateRandom2DArray(carNames.length, moveCount));
-        final List<String> winners = race.getWinners(moveHistory);
+        race.raceCars(moveCount, generator.generateRandom2DArray(carNames.length, moveCount));
+        final List<List<Integer>> moveHistories = race.getMoveHistories();
+        final List<String> winners = race.getWinners(moveHistories);
 
         final OutputView outputView = new OutputView();
-        outputView.printRaceResult(moveHistory, carNames, winners);
+        outputView.printRaceResult(moveHistories, carNames, winners);
     }
 }

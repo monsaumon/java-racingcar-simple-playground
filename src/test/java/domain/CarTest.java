@@ -3,6 +3,7 @@ package domain;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
+import java.util.List;
 import java.util.stream.Stream;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -20,10 +21,10 @@ public class CarTest {
         final Car car = new Car("asdf");
 
         // when
-        final int actual = car.moveIfGreaterThan(number);
+        car.moveIfGreaterThan(number);
 
         // then
-        assertThat(actual).isEqualTo(expected);
+        assertThat(car.getMoveHistory().get(0)).isEqualTo(expected);
     }
 
     @DisplayName("입력이 0보다 작거나 10 이상이면 IllegalArgumentException을 throw한다.")
@@ -37,25 +38,25 @@ public class CarTest {
         assertThatThrownBy(() -> car.moveIfGreaterThan(number)).isInstanceOf(IllegalArgumentException.class).hasMessage("입력값이 범위를 벗어났습니다.");
     }
 
-    @DisplayName("입력 배열의 각 원소마다 4 이상이면 움직이고, 이동 내역을 반환한다.")
+    @DisplayName("입력이 배열일 경우 각 원소마다 4 이상이면 움직인다.")
     @ParameterizedTest
     @MethodSource
-    public void testGenerateMoveHistory(final int[] numbers, final int[] expected) {
+    public void testMoveIfGreaterThan_ValidNumberArray(final int[] numbers, final List<Integer> expected) {
         // given
         final Car car = new Car("asdf");
 
         // when
-        final int[] actual = car.generateMoveHistory(numbers);
+        car.moveIfGreaterThan(numbers);
 
         // then
-        assertThat(actual).isEqualTo(expected);
+        assertThat(car.getMoveHistory()).isEqualTo(expected);
     }
 
-    private static Stream<Arguments> testGenerateMoveHistory() {
+    private static Stream<Arguments> testMoveIfGreaterThan_ValidNumberArray() {
         return Stream.of(
-                Arguments.arguments(new int[]{0, 3, 4, 9}, new int[]{0, 0, 1, 1}),
-                Arguments.arguments(new int[]{4, 4, 4, 4}, new int[]{1, 1, 1, 1}),
-                Arguments.arguments(new int[]{3, 3, 3, 3}, new int[]{0, 0, 0, 0})
+                Arguments.arguments(new int[]{0, 3, 4, 9}, List.of(0, 0, 1, 1)),
+                Arguments.arguments(new int[]{4, 4, 4, 4}, List.of(1, 1, 1, 1)),
+                Arguments.arguments(new int[]{3, 3, 3, 3}, List.of(0, 0, 0, 0))
         );
     }
 }

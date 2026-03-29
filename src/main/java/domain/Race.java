@@ -18,24 +18,22 @@ public class Race {
         checkRedundancy(cars.toArray());
     }
 
-    public int[][] getMoveHistoryFromEachCar(final int moveCount, final int[][] arrayOfCarMoveNumbers) {
+    public void raceCars(final int moveCount, final int[]... arrayOfCarMoveNumbers) {
         checkSizeOf2DArray(arrayOfCarMoveNumbers, cars.size(), moveCount);
-        final int[][] moveHistory = new int[cars.size()][moveCount];
-        for (int i = 0; i < cars.size(); i++) {
-            moveHistory[i] = cars.get(i).generateMoveHistory(arrayOfCarMoveNumbers[i]);
+        for(int i = 0; i < cars.size(); i++) {
+            cars.get(i).moveIfGreaterThan(arrayOfCarMoveNumbers[i]);
         }
-        return moveHistory;
     }
 
-    public List<String> getWinners(final int[][] moveHistory) {
+    public List<String> getWinners(final List<List<Integer>> moveHistories) {
         final List<String> winners = new ArrayList<>();
-        final int[] movedDistance = new int[moveHistory.length];
-        for (int i = 0; i < moveHistory.length; i++) {
-            movedDistance[i] = Arrays.stream(moveHistory[i]).sum();
+        final int[] movedDistance = new int[moveHistories.size()];
+        for (int i = 0; i < moveHistories.size(); i++) {
+            movedDistance[i] = moveHistories.get(i).stream().reduce(0, Integer::sum);
         }
         final int maxDistance = Arrays.stream(movedDistance).max().orElseThrow(NoSuchElementException::new);
-        for (int i = 0; i < moveHistory.length; i++) {
-            conditionalAdd(winners, movedDistance[i] == maxDistance, cars.get(i).name());
+        for (int i = 0; i < moveHistories.size(); i++) {
+            conditionalAdd(winners, movedDistance[i] == maxDistance, cars.get(i).getName());
         }
         return winners;
     }
@@ -43,8 +41,16 @@ public class Race {
     public String[] getCarNames() {
         final List<String> carNames = new ArrayList<>();
         for (Car car : cars) {
-            carNames.add(car.name());
+            carNames.add(car.getName());
         }
         return carNames.toArray(String[]::new);
+    }
+
+    public List<List<Integer>> getMoveHistories() {
+        final List<List<Integer>> moveHistory = new ArrayList<>();
+        for (Car car : cars) {
+            moveHistory.add(car.getMoveHistory());
+        }
+        return moveHistory;
     }
 }

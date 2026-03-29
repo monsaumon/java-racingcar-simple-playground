@@ -1,6 +1,5 @@
 package view;
 
-import java.util.Arrays;
 import java.util.List;
 
 import static domain.Utils.checkSizeOfArray;
@@ -14,18 +13,18 @@ public class OutputView {
         System.out.println();
     }
 
-    private int[] getMovedDistance(final int[][] moveHistory, final int step) {
-        final int[] movedDistance = new int[moveHistory.length];
-        for (int i = 0; i < moveHistory.length; i++) {
-            movedDistance[i] = Arrays.stream(moveHistory[i], 0, step).sum();
+    private int[] getMovedDistance(final List<List<Integer>> moveHistories, final int step) {
+        final int[] movedDistance = new int[moveHistories.size()];
+        for (int i = 0; i < moveHistories.size(); i++) {
+            movedDistance[i] = moveHistories.get(i).subList(0, step).stream().reduce(0, Integer::sum); //Arrays.stream(moveHistories.get(i), 0, step).sum();
         }
         return movedDistance;
     }
 
-    public void printRaceResult(final int[][] moveHistory, final String[] names, final List<String> winners) {
+    public void printRaceResult(final List<List<Integer>> moveHistories, final String[] names, final List<String> winners) {
         System.out.println("실행 결과");
-        for (int i = 0; i < moveHistory[0].length; i++) {
-            printOneMove(getMovedDistance(moveHistory, i + 1), names);
+        for (int i = 0; i < moveHistories.get(0).size(); i++) {
+            printOneMove(getMovedDistance(moveHistories, i + 1), names);
         }
         System.out.print(String.join(", ", winners) + "가 최종 우승했습니다.");
     }

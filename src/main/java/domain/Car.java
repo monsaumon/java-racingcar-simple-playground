@@ -5,13 +5,17 @@ import java.util.List;
 
 import static domain.Utils.validateName;
 
-public record Car(String name) {
+public final class Car {
     private static final int MOVING_THRESHOLD = 3;
     private static final int NUMBER_LOWER_BOUND = 0;
     private static final int NUMBER_UPPER_BOUND = 10;
 
+    private final String name;
+    private final List<Integer> moveHistory;
+
     public Car(final String name) {
         this.name = validateName(name);
+        this.moveHistory = new ArrayList<>();
     }
 
     private void checkNumberBound(final int number) {
@@ -20,16 +24,23 @@ public record Car(String name) {
         }
     }
 
-    public int moveIfGreaterThan(final int number) {
+    public void moveIfGreaterThan(final int number) {
         checkNumberBound(number);
-        return Boolean.compare(number > MOVING_THRESHOLD, false);
+        int moved = Boolean.compare(number > MOVING_THRESHOLD, false);
+        moveHistory.add(moved);
     }
 
-    public int[] generateMoveHistory(final int[] numbers) {
-        final List<Integer> moveHistory = new ArrayList<>();
+    public void moveIfGreaterThan(final int... numbers) {
         for (int number : numbers) {
-            moveHistory.add(moveIfGreaterThan(number));
+            moveIfGreaterThan(number);
         }
-        return moveHistory.stream().mapToInt(i -> i).toArray();
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public List<Integer> getMoveHistory() {
+        return moveHistory;
     }
 }

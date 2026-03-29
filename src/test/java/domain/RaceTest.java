@@ -13,39 +13,39 @@ public class RaceTest {
     @DisplayName("이동 횟수와 2차원 숫자 배열을 받아 이동 내역을 반환한다.")
     @ParameterizedTest
     @MethodSource
-    public void testGetMoveHistoryFromEachCar(final String[] names, final int moveCount, final int[][] numbers,
-                                              final int[][] expected) {
+    public void testRaceCars(final String[] names, final int moveCount, final int[][] numbers,
+                                              final List<List<Integer>> expected) {
         // given
         final Race race = new Race(names);
 
         // when
-        final int[][] actual = race.getMoveHistoryFromEachCar(moveCount, numbers);
+        race.raceCars(moveCount, numbers);
 
         // then
-        assertThat(actual).isEqualTo(expected);
+        assertThat(race.getMoveHistories()).isEqualTo(expected);
     }
 
-    private static Stream<Arguments> testGetMoveHistoryFromEachCar() {
+    private static Stream<Arguments> testRaceCars() {
         return Stream.of(
                 Arguments.arguments(new String[]{"aa", "bb", "cc"}, 4,
                         new int[][]{{4, 4, 4, 4}, {3, 3, 3, 3}, {3, 3, 4, 4}},
-                        new int[][]{{1, 1, 1, 1}, {0, 0, 0, 0}, {0, 0, 1, 1}}),
+                        List.of(List.of(1, 1, 1, 1), List.of(0, 0, 0, 0), List.of(0, 0, 1, 1))),
                 Arguments.arguments(new String[]{"aa", "bb", "cc"}, 2, new int[][]{{5, 4}, {8, 9}, {2, 6}},
-                        new int[][]{{1, 1}, {1, 1}, {0, 1}}),
+                        List.of(List.of(1, 1), List.of(1, 1), List.of(0, 1))),
                 Arguments.arguments(new String[]{"aa", "bb"}, 3, new int[][]{{3, 3, 3}, {6, 2, 6}},
-                        new int[][]{{0, 0, 0}, {1, 0, 1}})
+                        List.of(List.of(0, 0, 0), List.of(1, 0, 1)))
         );
     }
 
     @DisplayName("이동 내역을 받으면 우승자를 반환한다.")
     @ParameterizedTest
     @MethodSource
-    public void testGetWinners(final int[][] moveHistory, final List<String> expected) {
+    public void testGetWinners(final List<List<Integer>> moveHistories, final List<String> expected) {
         // given
         final Race race = new Race("asdf", "sdfg", "dfgh");
 
         // when
-        final List<String> actual = race.getWinners(moveHistory);
+        final List<String> actual = race.getWinners(moveHistories);
 
         // then
         assertThat(actual).isEqualTo(expected);
@@ -53,9 +53,9 @@ public class RaceTest {
 
     private static Stream<Arguments> testGetWinners() {
         return Stream.of(
-                Arguments.arguments(new int[][]{{1, 1, 1, 1}, {0, 0, 0, 0}, {0, 0, 1, 1}}, List.of("asdf")),
-                Arguments.arguments(new int[][]{{1, 1}, {1, 1}, {0, 1}}, List.of("asdf", "sdfg")),
-                Arguments.arguments(new int[][]{{0, 0, 0}, {1, 0, 1}, {1, 0, 0}}, List.of("sdfg"))
+                Arguments.arguments(List.of(List.of(1,1,1,1), List.of(0,0,0,0), List.of(0,0,1,1)), List.of("asdf")),
+                Arguments.arguments(List.of(List.of(1,1), List.of(1,1), List.of(0,1)), List.of("asdf", "sdfg")),
+                Arguments.arguments(List.of(List.of(1,1,0), List.of(1,0,1), List.of(0,1,1)), List.of("asdf", "sdfg", "dfgh"))
 
         );
     }
