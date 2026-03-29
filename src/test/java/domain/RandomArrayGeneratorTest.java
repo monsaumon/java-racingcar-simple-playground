@@ -13,7 +13,7 @@ public class RandomArrayGeneratorTest {
     private static RandomArrayGenerator randomArrayGenerator;
 
     @BeforeAll
-    static void beforeAll() {
+    public static void beforeAll() {
         randomArrayGenerator = new RandomArrayGenerator();
     }
 
