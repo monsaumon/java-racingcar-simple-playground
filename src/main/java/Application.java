@@ -1,5 +1,5 @@
 import domain.Race;
-import domain.RandomGenerator;
+import domain.RandomArrayGenerator;
 import java.util.List;
 import view.InputView;
 import view.OutputView;
@@ -11,7 +11,7 @@ public class Application {
         Race race = new Race(carNames);
         final int moveCount = inputView.inputMoveCount();
 
-        RandomGenerator generator = new RandomGenerator();
+        RandomArrayGenerator generator = new RandomArrayGenerator();
         final int[][] moveHistory = race.getMoveHistoryFromEachCar(moveCount,
                 generator.generateRandom2DArray(carNames.length, moveCount));
         final List<String> winners = race.getWinners(moveHistory);

@@ -2,12 +2,12 @@ package domain;
 
 import java.util.Random;
 
-public class RandomGenerator {
+public class RandomArrayGenerator {
     private static final int RANDOM_INT_BOUND = 10;
 
     private final Random random;
 
-    public RandomGenerator() {
+    public RandomArrayGenerator() {
         this.random = new Random();
     }
 
