@@ -11,7 +11,7 @@ public class RandomGenerator {
         this.random = new Random();
     }
 
-    private int[] generateRandomArray(final int length) {
+    public int[] generateRandomArray(final int length) {
         final int[] array = new int[length];
         for (int i = 0; i < length; i++) {
             array[i] = random.nextInt(RANDOM_INT_BOUND);
