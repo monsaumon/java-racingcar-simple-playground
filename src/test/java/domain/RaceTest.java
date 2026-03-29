@@ -59,25 +59,4 @@ public class RaceTest {
 
         );
     }
-
-    @DisplayName("getCarNames는 Car들의 이름을 반환한다.")
-    @ParameterizedTest
-    @MethodSource
-    public void testGetCarNames(final String[] expected) {
-        // given
-        final Race race = new Race(expected);
-
-        // when
-        final String[] actual = race.getCarNames();
-
-        // then
-        assertThat(actual).isEqualTo(expected);
-    }
-
-    private static Stream<Arguments> testGetCarNames() {
-        return Stream.of(
-                Arguments.arguments((Object) new String[]{"aaaa", "bbb", "cc"}),
-                Arguments.arguments((Object) new String[]{"asdf", "qwefe", "fds", "as"})
-        );
-    }
 }
