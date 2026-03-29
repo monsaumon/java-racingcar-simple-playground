@@ -1,14 +1,13 @@
 package view;
 
-import domain.WrongArrayLengthException;
 import java.util.Arrays;
 import java.util.List;
 
+import static domain.Utils.checkSizeOfArray;
+
 public class OutputView {
     private void printOneMove(final int[] movedDistance, final String[] names) {
-        if (names.length != movedDistance.length) {
-            throw new WrongArrayLengthException();
-        }
+        checkSizeOfArray(movedDistance, names.length);
         for (int i = 0; i < names.length; i++) {
             System.out.println(names[i] + " : " + "-".repeat(movedDistance[i]));
         }

@@ -59,12 +59,12 @@ public class UtilsTest {
         );
     }
 
-    @DisplayName("중복된 값이 존재하면 RedundantValueException을 throw한다.")
+    @DisplayName("중복된 값이 존재하면 IllegalArgumentException을 throw한다.")
     @ParameterizedTest
     @MethodSource
     public <T> void testCheckRedundancy_RedundantName(final T[] array) {
         // when & then
-        assertThatThrownBy(() -> checkRedundancy(array)).isInstanceOf(RedundantValueException.class);
+        assertThatThrownBy(() -> checkRedundancy(array)).isInstanceOf(IllegalArgumentException.class).hasMessage("중복 값이 존재합니다.");
     }
 
     private static Stream<Arguments> testCheckRedundancy_RedundantName() {
@@ -129,12 +129,12 @@ public class UtilsTest {
         );
     }
 
-    @DisplayName("size가 일치하지 않으면 WrongArrayLengthException을 throw한다.")
+    @DisplayName("size가 일치하지 않으면 IllegalArgumentException을 throw한다.")
     @ParameterizedTest
     @MethodSource
     public void testCheckSizeOfArray_WrongSize(final int[] array, final int length) {
         // when & then
-        assertThatThrownBy(() -> checkSizeOfArray(array, length)).isInstanceOf(WrongArrayLengthException.class);
+        assertThatThrownBy(() -> checkSizeOfArray(array, length)).isInstanceOf(IllegalArgumentException.class).hasMessage("배열의 크기가 올바르지 않습니다.");
     }
 
     private static Stream<Arguments> testCheckSizeOfArray_WrongSize() {
@@ -161,12 +161,12 @@ public class UtilsTest {
         );
     }
 
-    @DisplayName("size가 일치하지 않으면 WrongArrayLengthException을 throw한다.")
+    @DisplayName("size가 일치하지 않으면 IllegalArgumentException을 throw한다.")
     @ParameterizedTest
     @MethodSource
     public void testCheckSizeOf2DArray_WrongSize(final int[][] array, final int length1, final int length2) {
         // when & then
-        assertThatThrownBy(() -> checkSizeOf2DArray(array, length1, length2)).isInstanceOf(WrongArrayLengthException.class);
+        assertThatThrownBy(() -> checkSizeOf2DArray(array, length1, length2)).isInstanceOf(IllegalArgumentException.class).hasMessage("배열의 크기가 올바르지 않습니다.");
     }
 
     private static Stream<Arguments> testCheckSizeOf2DArray_WrongSize() {
